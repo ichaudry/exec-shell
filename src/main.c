@@ -14,16 +14,144 @@
 #include <string.h>
 
 
-int main(int argc, char **argv){
-    int condition=1;
 
-    //Loop to run the shell until an error is thrown 
-    do{
-        printf("> ");
+
+char *getInputLine();
+char ** getInputArguments(char * inputLine);
+
+
+int main(int argc, char *argv[]){
+    int runStatus;
+    char *prompt;
+    char * inputLine;
+    char ** inputArgs;
+
+
+
+   
+    //Takes the command line arguments to initalize prompt
+    if(argc==2){
+    prompt=argv[1];
     }
-    while(condition);
+
+    //If no prompt set prompt to >
+    else{
+    prompt=">";
+    }
+
+    do{
+        //Prints prompt
+        printf("%s\n", prompt);
+
+
+        //Get input line from the user
+        inputLine= getInputLine();
+
+
+        //Print input line as a test
+        // printf("%s \n",inputLine);
+
+
+        //Break input line into arguments
+        inputArgs= getInputArguments(inputLine);
+
+        // printf("\n %s     %s",inputArgs[1],inputArgs[3]);
+
+
+        
+
+
+        
+    }
+    while(runStatus);
 
 
 
     return 0; 
 }
+
+
+// char *getInputLine(void)
+// {
+//     // char *linePtr;
+//     // size_t buffer = 0; 
+
+//     // // //Segmenting buffer and catching errors with allocation
+//     // // linePtr = (char *)malloc(buffer * sizeof(char));
+//     // // if( linePtr == NULL)
+//     // // {
+//     // //     perror("Unable to allocate buffer");
+//     // //     exit(1);
+//     // // }
+
+//     // getline(&linePtr, &buffer, stdin);
+//     // return linePtr;
+// }
+
+char *getInputLine()
+{
+    int buffer= 1024;
+    char *linePtr= malloc(sizeof(char)* buffer);
+    char tempChar;
+    int stringIndex=0;
+    
+    //Segmenting buffer and catching errors with allocation
+    if( linePtr == NULL)
+    {
+        perror("Unable to allocate buffer");
+        exit(1);
+    }
+
+    //Loop gets characters until EOF or until the buufer size is reached 
+    while(1){
+        
+        //Read in a character from input 
+        tempChar= getchar();
+
+        //checks if end of file or end of line or buffer size is reached and returns resulting character array 
+        if (tempChar == EOF || tempChar == '\n' || stringIndex == buffer) 
+        {
+            linePtr[stringIndex] = '\0';
+            return linePtr;
+        } 
+        else 
+        {
+            linePtr[stringIndex] = tempChar;
+        }
+        stringIndex++;
+
+    }
+}
+
+
+  char ** getInputArguments(char * inputLine){
+
+
+    int bufferSize= 64;
+    char **args = malloc(bufferSize * sizeof(char*));
+    char * arg;
+    int index=0;
+
+
+    arg = strtok(inputLine, " \0\n");
+    while (arg != NULL)
+    {
+        args[index]=arg;
+        index++;
+
+        if (index >= bufferSize) {
+            bufferSize += bufferSize;
+            args = realloc(args, bufferSize * sizeof(char*));
+        if (!args) {
+            fprintf(stderr, "lsh: allocation error\n");
+            exit(EXIT_FAILURE);
+        }
+     }
+
+        arg = strtok(NULL, " \0\n");
+    }
+
+    args[index] = NULL;
+    return args;
+
+    }
