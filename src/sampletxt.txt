@@ -1,0 +1,5 @@
+hello world this is a test file to test my shells cat command.
+
+If this file displays without errors that means the shell is opeational
+
+This change was made using my own shells process running vim..
