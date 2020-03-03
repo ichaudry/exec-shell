@@ -1,0 +1,3 @@
+/Users/abechaudry/Github/simple-shell/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/abechaudry/Github/simple-shell/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/abechaudry/Github/simple-shell/cmake-build-debug/CMakeFiles/simple_shell.dir
