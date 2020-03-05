@@ -58,7 +58,6 @@ int main(int argc, char *argv[]){
                 
         //if user enters the exit command quit the shell
         if(strcmp(inputLine, exitCmd)==0){
-        printf("Exiting Shell");
         break;
         }
     
