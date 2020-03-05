@@ -7,6 +7,7 @@
 * Description: Simple shell that executes linux commands by forking and waiting for child processes
 *
 **************************************************************/
+
 #include <sys/wait.h>
 #include <sys/types.h> 
 #include <unistd.h>
@@ -45,7 +46,15 @@ int main(int argc, char *argv[]){
         //Prints prompt
         printf("%s", prompt);
 
-        char * inputLine= getInputLine();    
+        char * inputLine= getInputLine();   
+
+        //If no input report error and get another input
+        if(*inputLine == '\n') {
+            printf("You did not enter any input. Please try again.\n");
+            continue;
+        } 
+
+        printf("%s",inputLine);
                 
         //if user enters the exit command quit the shell
         if(strcmp(inputLine, exitCmd)==0){
@@ -56,8 +65,8 @@ int main(int argc, char *argv[]){
         //Split the input line into arguments using delimiters 
         char ** arguments= getArguments(inputLine);
 
-        //Process ids of child and those returned from wait
-        pid_t pid, wpid;
+        //Process id of child
+        pid_t pid;
 
         //Status of child process parent is waiting on
         int status;
@@ -80,11 +89,11 @@ int main(int argc, char *argv[]){
         else 
         {
             // Parent process
-            do {
-            wpid = waitpid(pid, &status, WUNTRACED);
-            } while (!WIFEXITED(status) && !WIFSIGNALED(status));
-            printf("Child %d, exited with %d\n",pid,WEXITSTATUS(status));
-        }
+            wait(&status);
+            } 
+        //Print ID and exit status of child that finished executing
+        printf("Child %d, exited with %d\n",pid,WEXITSTATUS(status));
+        
           
         //Free allocated memory
         free(inputLine);
