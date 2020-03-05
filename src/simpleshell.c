@@ -16,7 +16,7 @@
 #include <string.h>
 #include <signal.h>
 
-#define MAX_BUFFER 1024
+#define MAX_BUFFER 1025
 #define ARGUMENTS_BUFFER 64
 #define DELIMETER " \t\r\n\a"
 
@@ -44,7 +44,7 @@ int main(int argc, char *argv[]){
     while(1)
     {
         //Prints prompt
-        printf("%s", prompt);
+        printf("%s ", prompt);
 
         char * inputLine= getInputLine();   
 
