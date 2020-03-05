@@ -53,8 +53,6 @@ int main(int argc, char *argv[]){
             printf("You did not enter any input. Please try again.\n");
             continue;
         } 
-
-        printf("%s",inputLine);
                 
         //if user enters the exit command quit the shell
         if(strcmp(inputLine, exitCmd)==0){
