@@ -16,7 +16,7 @@
 #include <string.h>
 #include <signal.h>
 
-#define MAX_BUFFER 1025
+#define MAX_BUFFER 1024
 #define ARGUMENTS_BUFFER 64
 #define DELIMETER " \t\r\n\a"
 
